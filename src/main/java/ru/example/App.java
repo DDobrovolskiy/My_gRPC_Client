@@ -6,6 +6,7 @@ import ru.example.grpc.GreetingServiceGrpc;
 import ru.example.grpc.GreetingServiceOuterClass;
 
 import java.nio.channels.Channel;
+import java.util.Iterator;
 
 /**
  * Hello world!
@@ -30,9 +31,11 @@ public class App
                 .setName("Dmitriy")
                 .build();
 
-        GreetingServiceOuterClass.HelloResponse response = stub.greeting(request);
+        Iterator<GreetingServiceOuterClass.HelloResponse> response = stub.greeting(request);
 
-        System.out.println(response);
+        while (response.hasNext()) {
+            System.out.println(response.next());
+        }
 
         managedChannel.shutdownNow();
     }
